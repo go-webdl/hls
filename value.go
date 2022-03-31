@@ -36,6 +36,10 @@ type Resolution struct {
 	Height int
 }
 
+func (r Resolution) Format() string {
+	return fmt.Sprintf("%dx%d", r.Width, r.Height)
+}
+
 func String(value string) *Value {
 	return &Value{Type: StringType, StringValue: &value}
 }
@@ -267,7 +271,7 @@ func (v *Value) Format() string {
 	case BytesType:
 		return "0x" + strings.ToUpper(hex.EncodeToString(v.BytesValue))
 	case ResolutionType:
-		return fmt.Sprintf("%dx%d", v.ResolutionValue.Width, v.ResolutionValue.Height)
+		return v.ResolutionValue.Format()
 	}
 	return "UNKNOWN_VALUE"
 }
