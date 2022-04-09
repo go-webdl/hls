@@ -247,7 +247,7 @@ func Parse(r io.Reader, baseURL *url.URL, handler *ParserHandler) (err error) {
 				return
 			}
 			mediaPlaylist.DiscontinuitySequence = discontinuitySequence
-		case "EXTINT":
+		case "EXTINF":
 			if err = ensurePlaylist(!isMaster, &isMedia); err != nil {
 				return
 			}
@@ -282,7 +282,7 @@ func Parse(r io.Reader, baseURL *url.URL, handler *ParserHandler) (err error) {
 				return
 			}
 		case "EXT-X-KEY":
-			key := &Key{}
+			key = &Key{}
 			if err = key.ParseTag(tag); err != nil {
 				err = fmt.Errorf("line %d: %w", lineNum, err)
 				return
