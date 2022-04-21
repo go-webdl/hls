@@ -137,6 +137,10 @@ func Parse(r io.Reader, baseURL *url.URL, handler *ParserHandler) (err error) {
 		}
 
 		if lineTrimed[0] != '#' {
+			if lineTrimed[0] == '<' {
+				err = fmt.Errorf("line %d: invalid starting character at URL line:\n%s\n%w", lineNum, lineTrimed, err)
+				return
+			}
 			var ref *url.URL
 			if ref, err = url.Parse(lineTrimed); err != nil {
 				err = fmt.Errorf("line %d: failed parsing line:\n%s\nas URL: %w", lineNum, lineTrimed, err)
